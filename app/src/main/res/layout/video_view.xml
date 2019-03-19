@@ -5,11 +5,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <VideoView
-
-        android:id="@+id/video"
+    <FrameLayout
+        android:id="@+id/fLayout"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="wrap_content">
+        <VideoView
+            android:id="@+id/video"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+        <ImageButton
+            android:id="@+id/playpause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:src="@drawable/ic_play_arrow_black_24dp"
+            android:backgroundTint="#00FFFFFF"/>
+    </FrameLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

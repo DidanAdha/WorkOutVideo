@@ -45,6 +45,9 @@ public class Adapter extends RecyclerView.Adapter<Holder> {
         holder.pro.setProgress(progress);
         notifyItemChanged(position);
     }
+    public int getProgress(@NonNull final Holder holder){
+        return holder.pro.getProgress();
+    }
 
 
     private static String convertMillieToHMmSs(long millie) {

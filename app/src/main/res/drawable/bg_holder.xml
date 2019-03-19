@@ -24,9 +24,7 @@
         <scale
             android:scaleWidth="100%">
             <shape>
-                <corners
-                    android:topRightRadius="8dp"
-                    android:bottomRightRadius="8dp"/>
+                <corners />
                 <solid android:color="#8DCA44"/>
             </shape>
         </scale>

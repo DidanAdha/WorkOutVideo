@@ -2,9 +2,9 @@ package com.didanadha.miripnike.Data.Model;
 
 public class Video {
     public String title,link;
-    int duration;
+    long duration;
 
-    public Video(String title, String link,int duration) {
+    public Video(String title, String link,long duration) {
         this.title = title;
         this.link = link;
         this.duration = duration;
@@ -27,11 +27,11 @@ public class Video {
         this.link = link;
     }
 
-    public int getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 }

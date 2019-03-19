@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class Login extends AppCompatActivity {
     Session session;
-    EditText username,password;
+    EditText username,password,domain;
     Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
+        domain   = findViewById(R.id.domain);
         button   = findViewById(R.id.btn_login);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,33 +38,36 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(Login.this, "Loading...", Toast.LENGTH_SHORT).show();
                 String uname = username.getText().toString();
                 String pw    = password.getText().toString();
-
-                if (uname.equals("") || pw.equals("")){
-                    Toast.makeText(getApplicationContext(),"Username dan Password tidak boleh kosong",Toast.LENGTH_SHORT).show();
+                String dmn   = domain.getText().toString();
+                if (uname.equals("") || pw.equals("") || dmn.equals("")){
+                    Toast.makeText(getApplicationContext(),"Username Password dan Domain tidak boleh kosong",Toast.LENGTH_SHORT).show();
                 }else {
-                    login(uname,pw);
-                    username.setText("");
-                    password.setText("");
+                    login(uname,pw,dmn);
                 }
             }
         });
     }
-    private void login(String username,String password){
-        AndroidNetworking.get(Api.BASE_URL+"?username="+username+"&password="+password)
+    private void login(String rUsername,String rPassword, String rDomain){
+        AndroidNetworking.get(Api.BASE_URL+"?username="+rUsername+"&password="+rPassword+"&domain="+rDomain)
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if (response.optString("result") == null){
+                            if (response.optString("result").equals("error")){
                                 Toast.makeText(getApplicationContext(),"Username atau Password Salah",Toast.LENGTH_SHORT).show();
                             }else{
                                 JSONObject object = response.getJSONObject("result");
-                                session.setLoginId(object.optString("id_user"));
-                                session.setLoginUsername(object.optString("username"));
+                                JSONObject userdata = object.getJSONObject("userdata");
+                                JSONObject domain_data = object.getJSONObject("domain_data");
+                                session.setLoginUsername(userdata.optString("username"));
+                                session.setLoginId(userdata.optString("id_user"));
+                                session.setIdDomain(domain_data.optString("id_domain"));
                                 Intent intent = new Intent(Login.this,MainActivity.class);
-
+                                username.setText("");
+                                password.setText("");
+                                domain.setText("");
                                 startActivity(intent);
                                 finish();
                             }

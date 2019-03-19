@@ -22,6 +22,8 @@ public class Session {
     public String getLoginId(){
         return sp.getString("id","");
     }
+    public String getIdDomain(){return sp.getString("id_domain",""); }
+    public void setIdDomain(String string){sp.edit().putString("id_domain", string).commit();}
     public void clear(){
         sp.edit().clear().commit();
     }
